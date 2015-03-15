@@ -9,7 +9,7 @@ repositories {
 sourceSets {
     main {
         java {
-            include 'build/generated-src/java'
+            srcDir 'build/generated-src/java'
         }
     }
 }
@@ -22,8 +22,6 @@ dependencies {
     testCompile "junit:junit:4.12"
 }
 
-compileJava.dependsOn generateSources
-
 task generateSources(type: JavaExec) {
     inputs.dir file('src/main/antlr')
     outputs.dir file('build/generated-src/java')
@@ -33,3 +31,5 @@ task generateSources(type: JavaExec) {
 
     args = ["-o", 'build/generated-src/java', "-visitor", fileTree('src/main/antlr').include('*.g4').files].flatten()
 }
+
+compileJava.dependsOn generateSources

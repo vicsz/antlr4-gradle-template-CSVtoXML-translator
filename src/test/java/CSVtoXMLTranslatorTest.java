@@ -3,8 +3,7 @@ import org.junit.Test;
 public class CSVtoXMLTranslatorTest {
 
     @Test
-    public void shouldTestSomething(){
-
+    public void shouldGetCorrectXmlOutput(){
         String csvText =
             "Col1,Col2\n"+
             "1,text1\n"+
