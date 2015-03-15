@@ -7,11 +7,7 @@ repositories {
 }
 
 sourceSets {
-    main {
-        java {
-            srcDir 'build/generated-src/java'
-        }
-    }
+    main { java { srcDir 'build/generated-src/java' } }
 }
 
 configurations { antlr4 }
