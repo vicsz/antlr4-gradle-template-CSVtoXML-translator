@@ -1,7 +1,7 @@
 grammar CSV;
 
-file: hdr row+ ;
-hdr : row ;
+file: header row+ ;
+header : field (',' field)* '\r'? '\n' ;
 
 row : field (',' field)* '\r'? '\n' ;
 

@@ -6,24 +6,22 @@ import java.util.stream.Collectors;
 
 public class CSVtoXMLTranslator {
 
-    private class XMLFromCSVVisitor extends CSVBaseVisitor<Void> {
+    private class XMLFromCSVListener extends CSVBaseListener{
         private List<String> headersNames;
         private StringBuilder stringBuilder = new StringBuilder();
 
         @Override
-        public Void visitHdr(CSVParser.HdrContext ctx) {
-            headersNames = ctx.row().field().stream().map(x->x.TEXT().getSymbol().getText()).collect(Collectors.toList());
-            return null;
+        public void exitHeader(CSVParser.HeaderContext ctx) {
+            headersNames = ctx.field().stream().map(x->x.TEXT().getSymbol().getText()).collect(Collectors.toList());
         }
 
         @Override
-        public Void visitRow(CSVParser.RowContext ctx) {
+        public void exitRow(CSVParser.RowContext ctx) {
             stringBuilder.append("<row>");
             for(int i = 0; i < headersNames.size(); i++){
                 stringBuilder.append("<" + headersNames.get(i) + ">" + ctx.field(i).getText() + "</" + headersNames.get(i) + ">");
             }
             stringBuilder.append("</row>\n");
-            return null;
         }
 
         public String getXmlText(){
@@ -34,10 +32,11 @@ public class CSVtoXMLTranslator {
     public String map(String csvText){
         CSVLexer lexer = new CSVLexer(new ANTLRInputStream(csvText));
         CSVParser parser = new CSVParser(new CommonTokenStream(lexer));
-        XMLFromCSVVisitor visitor = new XMLFromCSVVisitor();
+        XMLFromCSVListener listener = new XMLFromCSVListener();
 
-        parser.file().accept(visitor);
+        parser.addParseListener(listener);
+        parser.file();
 
-        return visitor.getXmlText();
+        return listener.getXmlText();
     }
 }

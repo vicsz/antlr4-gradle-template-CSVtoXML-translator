@@ -25,7 +25,7 @@ task generateSources(type: JavaExec) {
     main = 'org.antlr.v4.Tool'
     classpath = configurations.antlr4
 
-    args = ["-o", 'build/generated-src/java', "-visitor", fileTree('src/main/antlr').include('*.g4').files].flatten()
+    args = ["-o", 'build/generated-src/java', fileTree('src/main/antlr').include('*.g4').files].flatten()
 }
 
 compileJava.dependsOn generateSources
