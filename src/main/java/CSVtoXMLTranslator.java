@@ -12,14 +12,14 @@ public class CSVtoXMLTranslator {
 
         @Override
         public void exitHeader(CSVParser.HeaderContext ctx) {
-            headersNames = ctx.field().stream().map(x->x.TEXT().getSymbol().getText()).collect(Collectors.toList());
+            headersNames = ctx.TEXT().stream().map(x->x.getSymbol().getText()).collect(Collectors.toList());
         }
 
         @Override
         public void exitRow(CSVParser.RowContext ctx) {
             stringBuilder.append("<row>");
             for(int i = 0; i < headersNames.size(); i++){
-                stringBuilder.append("<" + headersNames.get(i) + ">" + ctx.field(i).getText() + "</" + headersNames.get(i) + ">");
+                stringBuilder.append("<" + headersNames.get(i) + ">" + ctx.TEXT(i).getSymbol().getText() + "</" + headersNames.get(i) + ">");
             }
             stringBuilder.append("</row>\n");
         }
