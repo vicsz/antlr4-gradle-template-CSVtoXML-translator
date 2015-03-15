@@ -10,10 +10,13 @@ public class CSVtoXMLTranslator {
         private List<String> headersNames;
         private StringBuilder stringBuilder = new StringBuilder();
 
+        @Override
         public Void visitHdr(CSVParser.HdrContext ctx) {
             headersNames = ctx.row().field().stream().map(x->x.TEXT().getSymbol().getText()).collect(Collectors.toList());
             return null;
         }
+
+        @Override
         public Void visitRow(CSVParser.RowContext ctx) {
             stringBuilder.append("<row>");
             for(int i = 0; i < headersNames.size(); i++){
