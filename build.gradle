@@ -13,8 +13,8 @@ sourceSets {
 configurations { antlr4 }
 
 dependencies {
-    compile "org.antlr:antlr4-runtime:4.5"
-    antlr4 "org.antlr:antlr4:4.5"
+    compile "org.antlr:antlr4-runtime:4.7.1"
+    antlr4 "org.antlr:antlr4:4.7.1"
     testCompile "junit:junit:4.12"
 }
 
