@@ -36,4 +36,5 @@ task generateSources(type: JavaExec) {
 
 compileJava.dependsOn generateSources
 
+defaultTasks 'clean', 'build'
 
