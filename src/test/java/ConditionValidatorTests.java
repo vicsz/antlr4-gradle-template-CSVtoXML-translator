@@ -13,7 +13,7 @@ public class ConditionValidatorTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"001 == 001","1TEST == 5", "TEST = TEST1"})
+    @ValueSource(strings = {"1TEST == 5", "TEST = TEST1"})
     public void invalidConditions(String condition){
         assertFalse(new ConditionValidator(condition).valid());
     }
