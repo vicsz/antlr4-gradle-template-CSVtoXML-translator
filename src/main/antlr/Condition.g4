@@ -2,8 +2,12 @@ grammar Condition;
 
 start : expr | <EOF> ;
 
-expr : NUMBER operand NUMBER;
+expr : value operand value;
+
+value : NUMBER | TAG;
 
 operand : ' == ' ;
 
-NUMBER : '1' ;
+NUMBER : ('0' .. '9') + ('.' ('0' .. '9') +)? ;
+
+TAG : [A-Z][A-Z0-9.]* ;
