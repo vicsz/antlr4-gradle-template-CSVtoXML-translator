@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class CSVtoXMLTranslatorTest {
 
     @Test
@@ -17,6 +19,6 @@ public class CSVtoXMLTranslatorTest {
 
         String actualXmlText = new CSVtoXMLTranslator().map(csvText);
 
-        assert (expectedXmlText.equals(actualXmlText));
+        assertEquals(expectedXmlText, actualXmlText);
     }
 }
