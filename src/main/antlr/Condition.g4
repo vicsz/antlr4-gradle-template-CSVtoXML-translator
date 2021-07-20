@@ -2,11 +2,11 @@ grammar Condition;
 
 start : expr EOF;
 
-expr : expr OPERAND expr | value;
+expr : expr OPERAND expr | '(' expr ')' | value;
 
 value : IDENTIFIER | NUMBER;
 
-OPERAND : ' == ' | ' >= ' | ' <= ' | ' < ' | ' > ' ;
+OPERAND : ' == ' | ' >= ' | ' <= ' | ' < ' | ' > ' | ' & ' | ' | ';
 
 NUMBER : ('0' .. '9') + ('.' ('0' .. '9') +)? ;
 

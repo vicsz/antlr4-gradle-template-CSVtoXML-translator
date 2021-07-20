@@ -13,3 +13,5 @@ condition,expected_result,test_name
 "1TEST == 5", false, "Identifiers cant start with a number"
 "TEST = TEST1", false, "Don't allow single equal sign"
 "TEST == TEST1 >= TEST3", true, "Multiple Comparisons"
+"VAR_ONE == 1 & VAR_2 == 2", true, "Logical operator test"
+"VAR_ONE == 1 & (VAR_2 == 2)", true, "Allow parentheses"
