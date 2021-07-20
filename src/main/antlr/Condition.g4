@@ -1,13 +1,13 @@
 grammar Condition;
 
-start : expr | <EOF> ;
+start : expr EOF;
 
-expr : value operand value;
+expr : expr OPERAND expr | value;
 
-value : NUMBER | TAG;
+value : IDENTIFIER | NUMBER;
 
-operand : ' == ' ;
+OPERAND : ' == ' | ' >= ' | ' <= ' | ' < ' | ' > ' ;
 
 NUMBER : ('0' .. '9') + ('.' ('0' .. '9') +)? ;
 
-TAG : [A-Z][A-Z0-9.]* ;
+IDENTIFIER : [A-Z][A-Z0-9._]* ;

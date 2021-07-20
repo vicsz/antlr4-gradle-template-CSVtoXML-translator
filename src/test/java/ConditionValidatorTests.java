@@ -1,20 +1,18 @@
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConditionValidatorTests {
 
-    @ParameterizedTest
-    @ValueSource(strings = {"1 == 1", "2 == 2", "2 == 2.2", "VAR == 2", "TEST == TEXT2", "TEST.TEST == 1"})
-    public void validConditions(String condition){
-        assertTrue(new ConditionValidator(condition).valid());
+    @ParameterizedTest(name = "{2}")
+    @CsvFileSource(resources = "/condition_validation_tests.csv", numLinesToSkip = 1)
+    public void tests(String condition, boolean expectedResult, String testName){
+
+        ConditionValidator validator = new ConditionValidator(condition);
+        boolean result = validator.valid();
+
+        assertEquals(expectedResult, result, testName + ", validation (" + condition + "): ");
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"1TEST == 5", "TEST = TEST1"})
-    public void invalidConditions(String condition){
-        assertFalse(new ConditionValidator(condition).valid());
-    }
 }

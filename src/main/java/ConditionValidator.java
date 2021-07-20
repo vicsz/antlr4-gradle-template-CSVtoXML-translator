@@ -1,20 +1,19 @@
 import org.antlr.v4.runtime.*;
 
-import javax.xml.transform.ErrorListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConditionValidator {
 
-    List<String> syntaxErrors;
+    private final List<String> syntaxErrors;
 
     private class ErrorListener extends ConsoleErrorListener {
 
-        List<String> syntaxErrors = new ArrayList<>();
+        private final List<String> syntaxErrors = new ArrayList<>();
 
         @Override
         public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-            syntaxErrors.add("line " + line + ":" + charPositionInLine + " " + msg);
+            syntaxErrors.add("Syntax Error: " + msg + ", char position: " + charPositionInLine);
         }
 
         public List<String> getSyntaxErrors(){
@@ -28,20 +27,22 @@ public class ConditionValidator {
 
         ErrorListener errorListener = new ErrorListener();
 
+        //Remove and Replace Default Console Error Listeners
+        lexer.removeErrorListeners();
+        parser.removeErrorListeners();
         parser.addErrorListener(errorListener);
         lexer.addErrorListener(errorListener);
 
-        parser.start();
-
         syntaxErrors = errorListener.getSyntaxErrors();
 
+        parser.start();
     }
 
     public boolean valid(){
         return syntaxErrors.size() == 0;
     }
 
-    public List<String> getSyntaxErrors(){
-        return syntaxErrors;
+    public String getSyntaxErrors(){
+        return String.join("\n",syntaxErrors) + "\n";
     }
 }
